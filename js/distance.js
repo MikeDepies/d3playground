@@ -1,0 +1,5 @@
+distance = {};
+
+distance.euclidean = function() {
+	
+}
