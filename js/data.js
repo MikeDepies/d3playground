@@ -1,6 +1,6 @@
 var data = function(config) {
 	var dataset = [];
-	var header = {};
+	var header = jsml.header();
 	var label;
 	
 	//Process the config parameter.
@@ -26,31 +26,28 @@ var data = function(config) {
 	data_inst.add_record = function(record) {
 		//Add record and return our inst for chaining
 		//check header against record to make sure data is right.
-		for (r in record)
-			if (!(r in header))
-				throw "record doesn't match header";
-		for (r in header)
-			if (!(r in record))
-				throw "record doesn't match header";
+		if (!header.valid_record(record))
+			throw "record does not match header";
 		dataset.push(record);
 		return data_inst;
 	}
 	
 	data_inst.header = function(new_header) {
-		if (!arguments.length) return header;
+		if (!new_header) return header;
+		
 		header = new_header;
 		return data_inst;
 	}
 	
 	data_inst.features = function(includeLabel) {
-		//right now label will still be included since it's not discernible which one is the label.
-		//but we could create a header object that gives us more meta info.
-		features = [];
-		$.each(header, function(key, value) {
-			features.push(key);
-		});
+		var f = header().slice(0);
+		var labelIndex = f.indexOf(header.label());
 		
-		return features;
+		if (includeLabel || labelIndex == -1)
+			return header().slice(0);
+		
+		f.splice(labelIndex, 1);
+		return f;
 	}
 	
 	return data_inst;

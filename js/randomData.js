@@ -6,14 +6,14 @@ config is expecting these properties
 randomData = function(config) {
 	
 	var d = data();
-	var header = config.header;
+	var _header = config.header;
 	var num_records = config.num_records;
-	d.header(header);
+	d.header(header(_header));
 	
 	for (var i =0; i < num_records; i++) {
 		var new_entry = {};
 		
-		$.each(header, function(name, property) {
+		$.each(_header, function(name, property) {
 			//assume all doubles for a moment
 			var value = property;
 			if (value.length)

@@ -23,6 +23,11 @@ var heap = function() {
 		return h.element(rightChildIndex);
 	}
 	
+	h.parent = function (index) {
+		var parentIndex = Math.floor((index + 1)/2)
+		return h.element(parentIndex);
+	}
+	
 	return h;
 };
 

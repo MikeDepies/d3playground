@@ -1,17 +1,30 @@
-header = function() {
+jsml.header = function(record) {
 	var label;
-	var features = {};
+	var features = [];
+	for (var key in record)
+		features.push(key);
 	h = function() {
 		return features;
 	}
 	
-	h.label(x) {
+	h.label = function(x) {
 		if (!x)
 			return label;
 		label = x;
 	}
 	
-	h.numOfLabels() {
-		return label.length;
+	h.valid_record = function(record) {
+		var count = 0;
+		for (r in record) {
+			count+=1;
+			if (features.indexOf(r) == -1)
+				return false;
+		}
+		
+		if (count != features.length)
+			return false;
+			
+		return true;
 	}
+	return h;
 };

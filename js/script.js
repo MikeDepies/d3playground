@@ -1,6 +1,6 @@
 (function() {
 	var chart = function(dataset) {
-		var margin = {top: 20, right: 20, bottom: 30, left: 40},
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -21,11 +21,13 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var feature = dataset.features();
-label = {x : feature[0], y : feature[1], label : feature[2]};
+label = {x : feature[2], y : feature[1], label : dataset.header().label()};
+console.log(label);
 var data = dataset();
-var svg = d3.select(".features").append("svg")
+var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+	.attr("class", "svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -54,15 +56,27 @@ var svg = d3.select(".features").append("svg")
       .style("text-anchor", "end")
       .text(label.y)
 
-  svg.selectAll(".dot")
+  var circ = svg.selectAll(".dot")
       .data(data)
-    .enter().append("circle")
-      .attr("class", "dot")
+    .enter().append("circle");
+	circ.attr("class", "dot")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(d[label.x]); })
       .attr("cy", function(d) { return y(d[label.y]); })
       .style("fill", function(d) { return color(d[label.label]); });
-
+	circ.on("mouseover", function(d, i) {
+	
+		circ.filter(function (d, i2) {return i === i2;}).attr("class", "dot selected");
+		var tr = d3.select(".table").select("tbody").selectAll("tr");
+		tr.filter(function (d, i2) { return i === i2;}).attr("class", "highlight");
+	});
+	
+	circ.on("mouseout", function(d, i) {
+		circ.filter(function (d, i2) { return i === i2;}).attr("class", "dot");
+		var tr = d3.select(".table").select("tbody").selectAll("tr");
+		tr.filter(function (d, i2) { return i === i2;}).attr("class", "");
+	});
+	
   var legend = svg.selectAll(".legend")
       .data(color.domain())
     .enter().append("g")
@@ -82,52 +96,85 @@ var svg = d3.select(".features").append("svg")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-	 var newdata = [{}];
+	 /*var newdata = [{}];
 	svg.selectAll(".newinput").data(newdata).enter()
 		.append("circle")
       .attr("class", "dot newinput")
       .attr("r", 3.5)
       .attr("cx", function(d) { return x(0); })
       .attr("cy", function(d) { return y(0); })
-      .style("fill", function(d) { return color(0); });
+      .style("fill", function(d) { return color(0); });*/
+	}
+	var table = function(dataset) {
+		var columns = dataset.features(true);
+		var data = dataset();
+		var table = d3.select(".table").append("table").attr("class", "zebra"),
+        thead = table.append("thead"),
+        tbody = table.append("tbody");
+		
+		 // append the header row
+		thead.append("tr")
+        .selectAll("th")
+        .data(columns)
+        .enter()
+        .append("th")
+            .text(function(column) { return column; });
+			
+		 // create a row for each object in the data
+		var rows = tbody.selectAll("tr")
+			.data(data)
+			.enter()
+			.append("tr");
 
-	$("input").change(function() {
-	
-		newdata = {x:0, y:0, label:"a"};
-		newdata.x = + $("." + label.x).val();
-		newdata.y = +$("." + label.y).val();
-		newdata.label = $("." + label.label).val();
-		console.log(newdata);
-		d3.select(".newinput").data([newdata])
-      .attr("class", "dot newinput")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.x)})
-      .attr("cy", function(d) { return y(d.y)})
-      .style("fill", function(d) { return color(d.label); });
-	});
-	  
+			
+			rows.on("mouseover", function(d, i) {
+				var circ = d3.select("svg").selectAll(".dot");
+				
+				circ.filter(function (d, i2) {return i === i2;}).attr("class", "dot selected");
+				
+				rows.filter(function (d, i2) { return i === i2;}).attr("class", "highlight");
+			});
+			
+			rows.on("mouseout", function(d, i) {
+				var circ = d3.select("svg").selectAll(".dot");
+		
+				circ.filter(function (d, i2) { return i === i2;}).attr("class", "dot");
+				var tr = d3.select(".table").selectAll("tr");
+				rows.filter(function (d, i2) { return i === i2;}).attr("class", "");
+			});
+		// create a cell in each row for each column
+		var cells = rows.selectAll("td")
+			.data(function(row) {
+				return columns.map(function(column) {
+					return {column: column, value: row[column]};
+				});
+			})
+			.enter()
+			.append("td")
+				.text(function(d) { return d.value; });	
 	}
 
+	var drawNeighborhood = function(circleSelection) {
+		
+	}
 
-
-	var config = {
-		num_records : 30,
-		header : {feature1 : 0, feature2: 0, label: ["a", "b", "c"]}
-		};
-	var rd = randomData(config);//generate random data from the configuration above.
-	var features = rd.features();
-
+	
+	var cb = function(rd) {
+	rd.header().label("Play");
+	var features = rd.features(false);
 	var dom_features = d3.select(".features").selectAll(".feature").data(features);
 
 	var feature_div = dom_features.enter().append("div");
 	
-	feature_div.append("label")
+	/* feature_div.append("label")
 		.text( function (d) {return d})
 	
 	feature_div.append("input").attr("class", function(d) {return d;});
-	
+	 */
 	chart(rd);
+	table(rd);
 	
-	console.log(features);
-	console.log(rd());
+	}
+	
+	var rd = csvData(cb);//randomData(config);//generate random data from the configuration above.
 })();
