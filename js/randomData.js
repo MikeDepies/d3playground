@@ -12,6 +12,7 @@ randomData = function(config) {
 	
 	for (var i =0; i < num_records; i++) {
 		var new_entry = {};
+		
 		$.each(header, function(name, property) {
 			//assume all doubles for a moment
 			var value = property;
@@ -25,6 +26,7 @@ randomData = function(config) {
 				
 			
 		});
+		
 		d.add_record(new_entry);
 	}
 	

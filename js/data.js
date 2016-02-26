@@ -1,6 +1,7 @@
 var data = function(config) {
 	var dataset = [];
 	var header = {};
+	var label;
 	
 	//Process the config parameter.
 	/*
@@ -10,7 +11,9 @@ var data = function(config) {
 	*/
 	
 	var data_inst = function() {
-		return dataset;
+		//return a copy of the array.
+		//Note: the objects are shared between the original and the copy. This is a shallow clone.
+		return dataset.slice(0);
 	}
 	
 	data_inst.record = function(records) {
@@ -23,6 +26,12 @@ var data = function(config) {
 	data_inst.add_record = function(record) {
 		//Add record and return our inst for chaining
 		//check header against record to make sure data is right.
+		for (r in record)
+			if (!(r in header))
+				throw "record doesn't match header";
+		for (r in header)
+			if (!(r in record))
+				throw "record doesn't match header";
 		dataset.push(record);
 		return data_inst;
 	}

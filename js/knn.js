@@ -27,13 +27,13 @@ knn = function(config) {
 	var model = function(x) {
 		
 		if (arguments == 0)
-			throw new error("Need atleast one argument");
+			throw new error("Need at least one argument");
 		
 		var dataset = data();
 		var measures = [];
 		var indexes = [];
 		for (var i =0; i < dataset.length; i++) {
-			measures[i] = distance(dataset[i]);
+			measures[i] = distance(x, dataset[i]);
 			indexes[i] = i;
 		}
 		
