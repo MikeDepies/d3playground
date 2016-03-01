@@ -14,7 +14,6 @@ randomData = function(config) {
 		var new_entry = {};
 		
 		$.each(_header, function(name, property) {
-			//assume all doubles for a moment
 			var value = property;
 			if (value.length)
 				value = property[0];

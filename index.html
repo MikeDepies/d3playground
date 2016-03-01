@@ -3,9 +3,12 @@
 
 <script src="lib/d3.min.js" charset="utf-8"></script>
 <script src="lib/jquery-2.2.0.min.js" charset="utf-8"></script>
+<script src="js/jsml.js"></script>
+<script src="js/header.js"></script>
 <script src="js/data.js"></script>
 <script src="js/randomData.js"></script>
 <script src="js/feature.js"></script>
+<script src="js/csvData.js"></script>
 <style>
 
 body {
@@ -23,7 +26,12 @@ body {
   stroke: #000;
 }
 
+.selected {
+  stroke-width:3px;
+}
+
 </style>
+<link rel="stylesheet" type="text/css" href="css/table.css">
 </head>
 <body>
 	K <input id="k" input="text"/></input>
@@ -31,10 +39,13 @@ body {
 	New Data point
 	</div>
 	<div class="features"></div>
-	<div>
-	<svg class="chart">
+	<div style = "display:flex;">
+		<div style = "flex: 1;" class="table"></div>
+		<div class="chart">
 		
-	</svg>
+		</div>
+	
+	
 	</div>
 </body>
 

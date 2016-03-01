@@ -21,7 +21,7 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var feature = dataset.features();
-label = {x : feature[2], y : feature[1], label : dataset.header().label()};
+label = {x : feature[0], y : feature[1], label : dataset.header().label()};
 console.log(label);
 var data = dataset();
 var svg = d3.select(".chart").append("svg")
