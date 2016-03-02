@@ -10,6 +10,12 @@ var data = function(config) {
 			
 	*/
 	
+	
+	/*
+		hello mike
+	*/
+		
+	
 	var data_inst = function() {
 		//return a copy of the array.
 		//Note: the objects are shared between the original and the copy. This is a shallow clone.
