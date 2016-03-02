@@ -3,7 +3,7 @@ config is expecting these properties
 	num_records - The number of records to generate
 	header - the header information for each record
 */
-csvData = function(callback) {
+jsml.csvData = function(callback) {
 	//Need to load via csv into data object.
 	var d = data();
 	

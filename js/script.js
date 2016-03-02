@@ -96,14 +96,6 @@ var svg = d3.select(".chart").append("svg")
       .style("text-anchor", "end")
       .text(function(d) { return d; });
 
-	 /*var newdata = [{}];
-	svg.selectAll(".newinput").data(newdata).enter()
-		.append("circle")
-      .attr("class", "dot newinput")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return x(0); })
-      .attr("cy", function(d) { return y(0); })
-      .style("fill", function(d) { return color(0); });*/
 	}
 	var table = function(dataset) {
 		var columns = dataset.features(true);
@@ -176,5 +168,5 @@ var svg = d3.select(".chart").append("svg")
 	
 	}
 	
-	var rd = csvData(cb);//randomData(config);//generate random data from the configuration above.
+	var rd = jsml.csvData(cb);//randomData(config);//generate random data from the configuration above.
 })();

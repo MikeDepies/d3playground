@@ -10,23 +10,31 @@ var data = function(config) {
 			
 	*/
 	
-	
-	/*
-		hello mike
-	*/
-		
-	
+	/**
+		Construct an instance of our dataset. With a default call to return the records in a dataset.
+	 */
 	var data_inst = function() {
 		//return a copy of the array.
 		//Note: the objects are shared between the original and the copy. This is a shallow clone.
 		return dataset.slice(0);
 	}
 	
+	/**
+		Request a record, or an array of records. If no parameter is provided, this method acts as an alias to the default call.
+	*/
 	data_inst.record = function(records) {
-		if (!arguments.length) return dataset;
-		if (!records.length) {
-			//return specified records in array
-			}
+		if (!arguments.length) 
+			return data_inst();
+		console.log(arguments);
+		if (!records.length)
+			if (typeof records ==="number")
+				return dataset[records];
+			else
+				throw "dataset.records(..) is expecting a number.";
+		var ret_records = [];
+		for (var i =0; i < records.length; i++)
+			ret_records.push(dataset[records[i]]);
+		return ret_records;
 	}
 	
 	data_inst.add_record = function(record) {
