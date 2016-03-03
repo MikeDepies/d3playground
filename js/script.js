@@ -168,5 +168,5 @@ var svg = d3.select(".chart").append("svg")
 	
 	}
 	
-	var rd = jsml.csvData(cb);//randomData(config);//generate random data from the configuration above.
+	var rd = jsml.dataset.csvData({callback : cb, file : "data/data.csv"});//randomData(config);//generate random data from the configuration above.
 })();

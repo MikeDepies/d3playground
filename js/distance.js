@@ -1,4 +1,5 @@
-distance = {};
+(function () {
+var distance = jsml.distance = {};
 
 distance.euclidean = function() {
 
@@ -11,3 +12,4 @@ distance.euclidean = function() {
 		return d;
 	}
 }
+})()

@@ -3,16 +3,16 @@ config is expecting these properties
 	num_records - The number of records to generate
 	header - the header information for each record
 */
-randomData = function(config) {
+jsml.dataset.randomData = function(config) {
 	//construct dataset
-	var d = data();
+	var d = jsml.dataset.data();
 	//locally store header info from config
 	var _header = config.header;
 	//locally store num of records to generate form config
 	var num_records = config.num_records;
 	
 	//constructing dataset's header via the jsml.header() function
-	d.header(jsml.header(_header));
+	d.header(jsml.dataset.header(_header));
 	
 	for (var i =0; i < num_records; i++) {
 		var new_entry = {};

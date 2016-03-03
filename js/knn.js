@@ -5,7 +5,7 @@
 		k - neighbourhood size
 		distance - The distance function to use.
 */
-knn = function(config) {
+jsml.model.knn = function(config) {
 	
 	var data,
 		k,
