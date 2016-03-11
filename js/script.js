@@ -4,10 +4,10 @@
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var x = d3.scale.linear()
+x = d3.scale.linear()
     .range([0, width]);
 
-var y = d3.scale.linear()
+y = d3.scale.linear()
     .range([height, 0]);
 
 var color = d3.scale.category10();
@@ -97,7 +97,7 @@ var svg = d3.select(".chart").append("svg")
       .text(function(d) { return d; });
 
 	}
-	var table = function(dataset) {
+	var table = function( dataset) {
 		var columns = dataset.features(true);
 		var data = dataset();
 		var table = d3.select(".table").append("table").attr("class", "zebra"),
@@ -152,21 +152,56 @@ var svg = d3.select(".chart").append("svg")
 
 	
 	var cb = function(rd) {
-	rd.header().label("Play");
-	var features = rd.features(false);
-	var dom_features = d3.select(".features").selectAll(".feature").data(features);
+		rd.header().label("Play");
+		var features = rd.features(false);
+		var dom_features = d3.select(".features").selectAll(".feature").data(features);
 
-	var feature_div = dom_features.enter().append("div");
-	
-	/* feature_div.append("label")
-		.text( function (d) {return d})
-	
-	feature_div.append("input").attr("class", function(d) {return d;});
-	 */
-	chart(rd);
-	table(rd);
-	
+		var feature_div = dom_features.enter().append("div");
+		
+		/* feature_div.append("label")
+			.text( function (d) {return d})
+		
+		feature_div.append("input").attr("class", function(d) {return d;});
+		 */
+		chart(rd);
+		table(rd);
+		
+		var mouse_dot;
+		d3.select(".chart svg").on("click", function () {
+			//Lets get the d3 selection of this, the current element triggering th event, and then grab
+			//the g tag, also referred to as the group element.
+			//If we inspect the DOM in chrome via the right click inspect option, we can over over the dom elements
+			//and see the boundaries of each element visually, along with many other attributes.
+			//What we'll see in this case, is that the axes are inset the group tag, so we want to use that instead of the svg
+			// for positioning.
+			var s = d3.select(this).select("g");
+			
+			
+			//By calling node, we get 
+			var firstG = s.node();
+			
+			//We can no pass in s, which is holding our desired selection element
+			var mouse_position = d3.mouse(firstG);
+			if (mouse_dot) {
+				console.log(mouse_dot);
+				mouse_dot.attr("transform", "translate(" + mouse_position[0] + "," + mouse_position[1] + ")");
+			//update logic
+			} else {
+				mouse_dot = s.append("circle")
+				.attr("transform", "translate(" + mouse_position[0] + "," + mouse_position[1] + ")")
+				.attr("class", "dot")
+				.attr("r", "3.5")
+				.style("cursor","pointer");
+				
+				console.log(mouse_dot);
+			}
+			
+			
+			
+		});
 	}
+	
+	
 	
 	var rd = jsml.dataset.csvData({callback : cb, file : "data/data.csv"});//randomData(config);//generate random data from the configuration above.
 })();
