@@ -31,6 +31,7 @@
 			*/
 			var chart = function(svg) {
 				svg_root = svg;
+				console.log("chart constructor");
 				construct_ui(svg);
 			}
 			
@@ -61,7 +62,9 @@
 	};
 	
 	factory.createScatter = function(svgSelection) {
-		charts = [];
+		var charts = [];
+		console.log(svgSelection);
+		console.log("factory");
 		svgSelection.each(function (d, i) {
 			var d3_this = d3.select(this);
 			var new_chart = ui.scatterChart();
