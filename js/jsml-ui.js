@@ -48,16 +48,21 @@
 			
 			//Main update method? Is this an appropriate way to handle chart routing...
 			function update() {
+				//push updated data
+				//refresh ui
+				//rescale
 			}
 			
-			return chart;//This is wrong, need to return an array or charts?
+			return chart;
 	}
 	
 	/**
 		The factory is stateless. So it can act as a namespace method.
 	*/
 	var factory = ui.scatterChart.factory = function() {
-		//default functionalitY?
+		//default functionalitY? 
+		//Returns itself... infinite chaining!
+		return factory;
 		
 	};
 	
