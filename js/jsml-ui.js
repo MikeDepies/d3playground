@@ -10,16 +10,16 @@
 	
 	
 	ui.scatterChart = function() {
-		var svg_root,
-			svg_graphArea,
-			svg_xAxis,
-			svg_yAxis,
+		var svg = {};//.root .xAxis .yAxis .graphArea
+		var
 			xScale = [],
 			yScale = [],
 			xAxis = d3.svg.axis(),
-			yAxis = d3.svg.axis()
+			yAxis = d3.svg.axis(),
+			width,
+			height
 			;
-			
+		var data;
 			
 			/**
 			Produces a chart object that works on a selection...
@@ -29,10 +29,19 @@
 				If selection is comprised of various elements, we need to create a chart for each one. Each needing it's own special initialization.
 				
 			*/
-			var chart = function(svg) {
-				svg_root = svg;
+			var chart = function(selection) {
+				svg.root = selection;
 				console.log("chart constructor");
-				construct_ui(svg);
+				construct_ui(selection);
+			}
+			
+			/**
+				Set the dataset for the chart. 
+				Should this trigger an update? 
+			*/
+			chart.setData = function(d) {
+				data = d;
+				return chart;
 			}
 			
 			/*
@@ -40,10 +49,16 @@
 				basically, declare parts that can self construct... xAxis, yAxis-left, yAxis-right, legend. Each of these optional from a gui standpoint.
 			*/
 			function construct_ui(svg) {
-				svg_graphArea = svg.append("g");
-				svg_xAxis = svg_graphArea.append("g");
-				svg_yAxis = svg_graphArea.append("g");
+				svg.graphArea = svg.append("g");
+				svg.xAxis = svg_graphArea.append("g");
+				svg.yAxis = svg_graphArea.append("g");
+				//
+				
+				for (component in components) {
+					component._construct();
+				}
 			}
+			
 			
 			
 			//Main update method? Is this an appropriate way to handle chart routing...
@@ -59,7 +74,7 @@
 	/**
 		The factory is stateless. So it can act as a namespace method.
 	*/
-	var factory = ui.scatterChart.factory = function() {
+	var factory = ui.chart.factory = function() {
 		//default functionalitY? 
 		//Returns itself... infinite chaining!
 		return factory;
@@ -68,8 +83,6 @@
 	
 	factory.createScatter = function(svgSelection) {
 		var charts = [];
-		console.log(svgSelection);
-		console.log("factory");
 		svgSelection.each(function (d, i) {
 			var d3_this = d3.select(this);
 			var new_chart = ui.scatterChart();
@@ -81,6 +94,69 @@
 		});
 		return charts;
 	};
+	
+	var component = ui.chart.component = function() {
+		var c = {
+			_construct : function(root) {
+					//used to actually make use of the configurations
+					var element = c.dom.element;
+					root.append(element);
+				}
+		};
+		
+		c.dom = function() {
+			return c.dom.element;
+		}
+		//default to <g></g> tag
+		c.dom.element = "g";
+		
+		return c;
+	};
+	
+	var componentFactory = ui.chart.component.factory = function () {
+		//The perfect function!
+		return componentFactory;
+	};
+	
+				
+			
+			/*
+				What about making a component factory.
+				They create "recipes" that acts as complex objects. Such as Axis:
+					{
+						dom : "g",
+						scale : d3.scale.linearScale(),
+						svg : d3.svg.axis()
+					}
+			*/
+	
+	componentFactory.axis = function(config) {
+		if (config) {
+			//inherit config
+		}	
+		var component = component();
+		
+		//explicitly set g tag (don't depend on component defaults)
+		component.dom.element = "g";
+		
+		component.dom.attr = {};
+		component._construct = function(root) {
+			var attr = component.dom.attr;
+			var element = root.append(component.dom.element);
+			for (var name in attr) {
+				element.attr(name, attr[name]);
+			}
+		}
+		return component;
+	};
+	
+	componentFactory.label = function(config) {
+		
+		var component = component();
+		
+		component.dom.element = "text";
+		
+	}
 	
 	
 	

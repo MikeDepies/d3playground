@@ -34,16 +34,20 @@ var svg = d3.select(".chart").append("svg")
   x.domain(d3.extent(data, function(d) { return d[label.x]; })).nice();
   y.domain(d3.extent(data, function(d) { return d[label.y]; })).nice();
 
-  svg.append("g")
+ var gXAxis = svg.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-    .append("text")
+      .call(xAxis);
+	  
+	  
+	  //xAxis(gXAxis);
+    gXAxis.append("text")
       .attr("class", "label")
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
       .text(label.x);
+	
 
   svg.append("g")
       .attr("class", "y axis")
