@@ -95,13 +95,34 @@
 		return charts;
 	};
 	
+	/**
+		Component should have some basic functionality.
+			Dom representation
+			controller like func?
+			self construction?
+			
+			Component:								Descript:
+				dom:								Namespace for dom related data
+					element							The element as a string E.G. g, svg, div
+					attr:							namespace for the dom.attr settings
+						key : value/[]				
+				lineage:							Namespace for identifying aspects of the component
+					id : value						The current recipe/factory component name
+					stack : []						Holds onto the set of id's that have contributed to this component.
+				_equalLineage : function()
+				_
+					
+				
+					
+			
+	*/
 	var component = ui.chart.component = function() {
-		var c = {
-			_construct : function(root) {
-					//used to actually make use of the configurations
-					var element = c.dom.element;
-					root.append(element);
-				}
+		var c = function(root) {c._construct(root)};
+		
+		c._construct = function(root) {
+			//used to actually make use of the configurations
+			var element = c.dom.element;
+			root.append(element);
 		};
 		
 		c.dom = function() {
@@ -110,8 +131,16 @@
 		//default to <g></g> tag
 		c.dom.element = "g";
 		
+		component.dom.attr = {};
+		component._construct = function(root) {
+			var attr = component.dom.attr;
+			var element = root.append(component.dom.element);
+			for (var name in attr) {
+				element.attr(name, attr[name]);
+			}
+		}
 		return c;
-	};
+	}; 
 	
 	var componentFactory = ui.chart.component.factory = function () {
 		//The perfect function!
@@ -139,14 +168,7 @@
 		//explicitly set g tag (don't depend on component defaults)
 		component.dom.element = "g";
 		
-		component.dom.attr = {};
-		component._construct = function(root) {
-			var attr = component.dom.attr;
-			var element = root.append(component.dom.element);
-			for (var name in attr) {
-				element.attr(name, attr[name]);
-			}
-		}
+		
 		return component;
 	};
 	
