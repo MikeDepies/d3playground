@@ -23,65 +23,30 @@ var ui = jsml.ui;
 	*/
 	var component = ui.chart.component = function() {
 		var c = function(root) {c._construct(root)};
-		
+		//list of construction functions: constructionCallBack(root, component) {}.
+		var element;
+		c.construction = [];
 		c._construct = function(root) {
-			//used to actually make use of the configurations
-			var element = c.dom.element;
-			root.append(element);
+			var attr = c.dom.attr;
+			element = root.append(c.dom.element);
+			for (var key in c.construction) {
+				c.construction[key](root, c);
+			}
 		};
 		
 		c.dom = function() {
-			return c.dom.element;
+			return element;
 		}
 		//default to <g></g> tag
 		c.dom.element = "g";
-		
 		c.dom.attr = {};
-		c._construct = function(root) {
-			var attr = c.dom.attr;
-			var element = root.append(c.dom.element);
-			for (var name in attr) {
-				element.attr(name, attr[name]);
-			}
-		}
+		
 		return c;
 	}; 
 	
-	var componentFactory = ui.chart.component.factory = function () {
-		//The perfect function!
-		return componentFactory;
-	};
+	
 	
 				
 			
-			/*
-				What about making a component factory.
-				They create "recipes" that acts as complex objects. Such as Axis:
-					{
-						dom : "g",
-						scale : d3.scale.linearScale(),
-						svg : d3.svg.axis()
-					}
-			*/
 	
-	componentFactory.axis = function(config) {
-		if (config) {
-			//inherit config
-		}	
-		var c = component();
-		
-		//explicitly set g tag (don't depend on component defaults)
-		c.dom.element = "g";
-		
-		
-		return c;
-	};
-	
-	componentFactory.label = function(config) {
-		
-		var component = component();
-		
-		component.dom.element = "text";
-		
-	}
 })();

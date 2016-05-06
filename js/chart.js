@@ -46,13 +46,14 @@
 				basically, declare parts that can self construct... xAxis, yAxis-left, yAxis-right, legend. Each of these optional from a gui standpoint.
 			*/
 			function construct_ui(sel_svg) {
-				svg.graphArea = sel_svg.append("g");
+				/* svg.graphArea = sel_svg.append("g");
 				svg.xAxis = svg.graphArea.append("g");
-				svg.yAxis = svg.graphArea.append("g");
+				svg.yAxis = svg.graphArea.append("g"); */
 				//
 				
-				for (component in components) {
-					component._construct(svg);
+				for (key in components) {
+				console.log("building component");
+					components[key]._construct(sel_svg);
 				}
 			}
 			
@@ -78,13 +79,16 @@
 		
 	};
 	
-	factory.createScatter = function(svgSelection) {
+	factory.createScatter = function(svgSelection, components) {
 		var charts = [];
 		svgSelection.each(function (d, i) {
 			var d3_this = d3.select(this);
 			var new_chart = ui.chart.scatter();
 			//Set up chart
-			
+			for (c in components) {
+				new_chart.addComponent(components[c]);
+				//console.log(components[c]);
+				}
 			//End set up chart
 			d3_this.call(new_chart);
 			charts.push(new_chart);
