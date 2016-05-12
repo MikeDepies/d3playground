@@ -8,11 +8,13 @@ jsml.sort = {};
 		2) We have a function that instantiates a function object that is only utilized once. The heapsort object should parametrize it's
 			methods instead of keeping internal states.
 */
-jsml.sort.heap = function(unsortedData) {
+jsml.sort.heap = function(unsortedData, dataGetter) {
 	//Use the slice(0) short cut to create a shallow copy of the array.
 	var data = unsortedData.slice(0);
 	var sortedData = [];
 	
+	if (!dataGetter)
+		dataGetter = function(d) {return d;};
 	/**
 		Conducts the heap sort
 		@return sorted data array.
@@ -71,7 +73,7 @@ jsml.sort.heap = function(unsortedData) {
 		for (var index = data.length -1; index > 0; index--) {
 			var parentVal = h.parent(index);
 			var currentVal = data[index];
-			if (currentVal > parentVal) {
+			if (dataGetter(currentVal) > dataGetter(parentVal)) {
 				swap(index, h.iparent(index));
 			}
 		}

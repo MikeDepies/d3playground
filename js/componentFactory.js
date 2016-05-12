@@ -40,13 +40,16 @@
 		//explicitly set g tag (don't depend on component defaults)
 		c.dom.element = "g";
 		c.dom.attr.class = "axis";
+		c.d3 = {
+			scale : d3.scale.linearScale(),
+			axis : d3.svg.axis()
+			};
 		return c;
 	};
 	
 	componentFactory.label = function() {
 		
 		var c = componentFactory();
-		
 		c.dom.element = "text";
 		
 	}
