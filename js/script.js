@@ -31,8 +31,8 @@ var svg = d3.select(".chart").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  x.domain(d3.extent(data, function(d) { return d[label.x]; })).nice();
-  y.domain(d3.extent(data, function(d) { return d[label.y]; })).nice();
+  x.domain([0, 100]).nice();
+  y.domain([0, 100]).nice();
 
  var gXAxis = svg.append("g")
       .attr("class", "x axis")

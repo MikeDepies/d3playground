@@ -3,7 +3,7 @@
 	dataset.data = function(config) {
 		var dataset = [];
 		var header = jsml.dataset.header();
-		var label;
+		
 		
 		//Process the config parameter.
 		/*
@@ -88,6 +88,14 @@
 			f.splice(labelIndex, 1);
 			return f;
 		}
+
+		data_inst.label = function(label) {
+			if (arguments.length == 0)
+				return header.label();
+			header.label(label);
+			return data_inst;
+
+		};
 		
 		return data_inst;
 	}

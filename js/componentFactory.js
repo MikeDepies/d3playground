@@ -16,7 +16,7 @@
 			*/
 	
 	var componentFactory = ui.chart.component.factory = function () {
-		var c = componentFactory();
+		var c = component();
 		c.construction.push(construction.attribute());
 		
 		return c;
@@ -41,7 +41,7 @@
 		c.dom.element = "g";
 		c.dom.attr.class = "axis";
 		c.d3 = {
-			scale : d3.scale.linearScale(),
+			scale : d3.scale.linear(),
 			axis : d3.svg.axis()
 			};
 		return c;
