@@ -14,7 +14,7 @@
 						svg : d3.svg.axis()
 					}
 			*/
-	
+		
 	var componentFactory = ui.chart.component.factory = function () {
 		var c = component();
 		c.construction.push(construction.attribute());

@@ -18,4 +18,4 @@ distance.euclidean = function() {
 	
 	return dist;
 }
-})()
+})()	

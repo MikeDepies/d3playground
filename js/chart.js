@@ -24,7 +24,6 @@
 			*/
 			var chart = function(selection) {
 				svg.root = selection;
-				console.log("chart constructor");
 				construct_ui(selection);
 			}
 			
@@ -52,7 +51,6 @@
 				//
 				
 				for (key in components) {
-				console.log("building component");
 					components[key]._construct(sel_svg);
 				}
 			}

@@ -5,7 +5,7 @@
 	};
 	
 	construction.attribute = function() {
-	
+		
 		return function(root, c) {
 			var attr = c.dom.attr;
 			var element = c.dom();
@@ -17,7 +17,10 @@
 	
 	construction.axis = function() {
 		return function(root, c) {
-			
+			var axis = c.d3.axis;
+			var scale = c.d3.scale;
+			axis.scale(scale);
+			c.dom().call(axis)
 		}
 	};
 	
