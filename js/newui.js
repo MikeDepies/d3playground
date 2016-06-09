@@ -6,10 +6,15 @@ var components = [];
 var xAxis = ui.chart.component.factory.axis();
 xAxis.dom.attr.class = "x axis";
 
+var yAxis = ui.chart.component.factory.axis();
+yAxis.dom.attr.class = "y axis";
+
+
 components.push(xAxis);
+components.push(yAxis);
 
 //console.log(components[0]);
 
-test = chartFactory.createScatter(s, components);
+chart = chartFactory.createScatter(s, components);
 
 //test(s);

@@ -50,9 +50,8 @@
 				svg.xAxis = svg.graphArea.append("g");
 				svg.yAxis = svg.graphArea.append("g"); */
 				//
-				
+				console.log("building components");
 				for (key in components) {
-				console.log("building component");
 					components[key]._construct(sel_svg);
 				}
 			}
