@@ -21,7 +21,7 @@ var ui = jsml.ui;
 					
 			
 	*/
-	var component = ui.chart.component = function() {
+	var component = ui.component = function() {
 		var c = function(root) {c._construct(root)};
 		//list of construction functions: constructionCallBack(root, component) {}.
 		var element;

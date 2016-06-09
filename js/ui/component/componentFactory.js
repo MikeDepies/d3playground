@@ -1,7 +1,7 @@
 (function() {
 	var ui = jsml.ui;
-	var component = ui.chart.component;
-	var construction = ui.chart.component.construction;
+	var component = ui.component;
+	var construction = ui.component.construction;
 	
 				
 			

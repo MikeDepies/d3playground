@@ -1,6 +1,6 @@
 (function() {
 	var ui = jsml.ui;
-	var construction = ui.chart.component.construction = function() {
+	var construction = ui.component.construction = function() {
 		
 	};
 	
