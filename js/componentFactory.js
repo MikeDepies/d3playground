@@ -22,6 +22,11 @@
 		return c;
 	};
 	
+	/**
+		might act as a chart stand in?
+		figure out how to 4loop over children construction only after this componetns construction is finished
+		This needs to hold for all subsequent componetns that use composite as a base.
+	*/
 	componentFactory.composite = function() {
 		var c = componentFactory();
 		c.children = [];
@@ -31,8 +36,11 @@
 	
 	/**
 	CompositeComponent, has children and does what charts does? for loop over children components!
+	-=--=-=-=-=-=-=-=-=-=-=-=-=-
+	6/8/2016 - Don't know what I fully mean above^
+	I suppose with the 
 	*/
-	
+		
 	componentFactory.axis = function() {
 		var c = componentFactory.composite();
 		var children = c.children;

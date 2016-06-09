@@ -41,6 +41,29 @@ var ui = jsml.ui;
 		c.dom.element = "g";
 		c.dom.attr = {};
 		
+		/**
+		Consider a lineage object defined else where with funtionaltiy built above simple string Ids
+		...
+		*/
+		c.lineage = {
+			id : "component",
+			stack : [],
+			_add : function(newId) {
+				c.lineage.stack.push(id);
+				c.lineage.id = newId;
+			},
+			_equalLineage : function(otherLineage) {
+				//lineage check comparison?
+			},
+			_lineageEquality : function(otherLineage) {
+				//returns the % they are the same?
+			},
+			_lineageIntersect : function(otherLineage) {
+				//returns the lineage id's that match between the two
+			}
+		};
+
+
 		return c;
 	}; 
 	

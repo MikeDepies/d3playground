@@ -6,6 +6,10 @@ var components = [];
 var xAxis = ui.chart.component.factory.axis();
 xAxis.dom.attr.class = "x axis";
 
+var yAxis = ui.chart.component.factory.axis();
+yAxis.dom.attr.class = "y axis";
+
+
 components.push(xAxis);
 
 //console.log(components[0]);
