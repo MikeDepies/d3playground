@@ -24,7 +24,6 @@
 			*/
 			var chart = function(selection) {
 				svg.root = selection;
-				console.log("chart constructor");
 				construct_ui(selection);
 			}
 			

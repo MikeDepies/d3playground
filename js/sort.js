@@ -62,7 +62,7 @@ jsml.sort.heap = function(unsortedData, dataGetter) {
 			swap(0, data.length-1);
 			sortedData.push(data.pop());
 		}
-		
+		sortedData.push(data.pop());
 	};
 	
 	/**

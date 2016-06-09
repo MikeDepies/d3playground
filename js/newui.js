@@ -16,5 +16,13 @@ components.push(yAxis);
 //console.log(components[0]);
 
 chart = chartFactory.createScatter(s, components);
+var cb = function (dataset) {
+	dataset.label("Play");
+	var x = dataset()[0];
+	console.log(x);
+	console.log(jsml.model.knn({ k: 10, data : dataset})(x));
+	
+}
+var rd = jsml.dataset.csvData({callback : cb, file : "data/data.csv"});//randomData(config);//generate random data from the configuration above.
 
 //test(s);
